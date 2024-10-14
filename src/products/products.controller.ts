@@ -29,7 +29,7 @@ export class ProductsController {
 
   @Get()
   findAll(@Query() paginationDto: PaginationDto) {
-    return this.productsClient.send({ cmd: 'find-all' }, paginationDto);
+    return this.productsClient.send({ cmd: 'findAll' }, paginationDto);
   }
 
   @Get(':id')
