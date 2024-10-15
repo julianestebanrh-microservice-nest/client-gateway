@@ -9,11 +9,11 @@
 1. Clonar el repositorio
 2. Instalar dependencias
 3. Crear un archivo `.env` basado en el `.env.template`
-4. Tener levantados los microservicios que se van a consumir
-5. Ejecutar `npm run start:dev`
-
-## Nats
+4. Levantar servidor de NATS
 
 ```
 docker run -d --name nats-server -p 4222:4222 -p 8222:8222 nats
 ```
+
+5. Tener levantados los microservicios que se van a consumir
+6. Ejecutar `npm run start:dev`
