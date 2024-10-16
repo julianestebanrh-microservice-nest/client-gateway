@@ -21,26 +21,40 @@ export class OrdersController {
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
-    return this.client.send('createOrder', createOrderDto);
-  }
-
-  @Get()
-  findAll(@Query() paginationDto: PaginationOrderDto) {
-    return this.client.send('findAllOrders', paginationDto);
-  }
-
-  @Get('id/:id')
-  findOne(@Param('id', ParseUUIDPipe) id: string) {
-    return this.client.send('findOneOrder', { id }).pipe(
+    const order = this.client.send('createOrder', createOrderDto).pipe(
       catchError((error) => {
         throw new RpcException(error);
       }),
     );
+
+    return order;
+  }
+
+  @Get()
+  findAll(@Query() paginationDto: PaginationOrderDto) {
+    const orders = this.client.send('findAllOrders', paginationDto).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+
+    return orders;
+  }
+
+  @Get('id/:id')
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    const order = this.client.send('findOneOrder', { id }).pipe(
+      catchError((error) => {
+        throw new RpcException(error);
+      }),
+    );
+
+    return order;
   }
 
   @Get(':status')
   findByStatus(@Param() statusDto: StatusDto, paginationDto: PaginationDto) {
-    return this.client
+    const orders = this.client
       .send('findAllOrders', {
         status: statusDto.status,
         ...paginationDto,
@@ -50,6 +64,8 @@ export class OrdersController {
           throw new RpcException(error);
         }),
       );
+
+    return orders;
   }
 
   @Patch(':id')
